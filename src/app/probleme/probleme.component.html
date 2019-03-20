@@ -1,3 +1,4 @@
+<br />
 <div class="container">
   <div class="card">
     <div class="card-header">
@@ -5,7 +6,37 @@
     </div>
     <div class="card-body">
       <h5 class="card-title">Special title treatment</h5>
-      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <div class="card-text">
+        <form class="form-horizontal" novalidate (ngSubmit)="save()" [formGroup]="problemeForm">
+        <div class="form-group row">
+          <label for="prenomProbleme" class="col-md-2 col-form-label text-right">Votre prénom :</label>
+          <div class="col-md-10">
+              <input class="form-control"
+              id="prenomId"
+              type="text"
+              placeholder="Votre prénom ici (obligatoire)"
+              formControlName="prenomProbleme"
+              [ngClass]="{'is-valid': (problemeForm.get('prenomProbleme').touched ||
+              problemeForm.get('prenomProbleme').dirty) &&
+              (problemeForm.get('prenomProbleme').valid),
+              'is-invalid': (problemeForm.get('prenomProbleme').touched ||
+              problemeForm.get('prenomProbleme').dirty) &&
+              (!problemeForm.get('prenomProbleme').valid )}"/>
+
+            <span class="form-text" *ngIf="(problemeForm.get('prenomProbleme').touched ||
+            problemeForm.get('prenomProbleme').dirty) &&
+            problemeForm.get('prenomProbleme').errors" 
+            >
+              <span *ngIf="problemeForm.get('prenomProbleme').errors.minlength" >
+                <small class="text-muted">
+                  Indiquez au moins 3 caractères.
+                </small>
+              </span>
+            </span>
+          </div>
+        </div>
+        </form>
+      </div>
     </div>
     <div class="card-footer">
         <a href="#" class="btn btn-primary"><fa name="fas fa-save"></fa> Savegarder</a>

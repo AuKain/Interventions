@@ -4,10 +4,9 @@ import { AccueilComponent } from './accueil/accueil.component';
 import { ProblemeComponent } from './probleme/probleme.component';
 
 const routes: Routes = [
-  {path:'accueil', component:AccueilComponent},
+  {path:'accueil', component: AccueilComponent},
+  {path:'probleme', component: ProblemeComponent},
   {path:'', redirectTo:'accueil', pathMatch:'full'},
-  {path:'probleme', component:ProblemeComponent},
-  {path:'', redirectTo:'probleme', pathMatch:'full'},
   {path:'**', redirectTo:'accueil', pathMatch:'full'} //si la route est inexistante rediriger sur Accueil
 ];
 
