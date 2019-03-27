@@ -22,11 +22,7 @@ describe('ProblemeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('champ  PRÉNOM valide avec 3 caractères', () => {
+  it('champ PRÉNOM valide avec 3 caractères', () => {
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
     prenomProbleme.setValue('a'.repeat(3));
     expect(prenomProbleme.valid).toBe(true);
@@ -37,7 +33,7 @@ describe('ProblemeComponent', () => {
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
     prenomProbleme.setValue('a'.repeat(2));
     errors = prenomProbleme.errors || {};
-    expect(errors['minlength']).toBeTruthy();
+    expect(errors['nbreCaracteresInsuffisants']).toBeTruthy();
   });
 
   it('Champ PRÉNOM valide avec 200 caractères', () => {
@@ -46,22 +42,26 @@ describe('ProblemeComponent', () => {
     expect(prenomProbleme.valid).toBe(true);
   });
 
-  it('Champ  PRÉNOM invalide avec aucune valeur', () => {
+  it('Champ PRÉNOM invalide avec aucune valeur', () => {
     let errors = {};
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
     errors = prenomProbleme.errors || {};
     expect(errors['required']).toBe(true);
   });
 
-  it('Champ PRÉNOM valide avec 10 espaces', () => {
+  it('Champ PRÉNOM invalide avec 10 espaces', () => {
+    let errors = {};
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
+    errors = prenomProbleme.errors || {};
     prenomProbleme.setValue(' '.repeat(10));
-    expect(prenomProbleme.valid).toBe(true);
+    expect(errors['nbreCaracteresInsuffisants']).toBe(true);
   });
 
-  it('Champ  PRÉNOM valide avec 2 espaces et 1 caractère ', () => {
+  it('Champ PRÉNOM invalide avec 2 espaces et 1 caractère ', () => {
+    let errors = {};
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
+    errors = prenomProbleme.errors || {};
     prenomProbleme.setValue('  a');
-    expect(prenomProbleme.valid).toBe(true);
+    expect(errors['nbreCaracteresInsuffisants']).toBe(true);
   })
 });
