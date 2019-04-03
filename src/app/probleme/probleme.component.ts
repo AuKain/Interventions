@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ZonesValidator } from '../shared/longueur-minimum/longueur-minimum.component';
+import { ZonesValidator } from '../shared/longueur/longueur.component';
+import { TypeProblemeService } from './type-probleme.service';
+import { ITypeProbleme } from './typeProbleme';
 
 @Component({
   selector: 'Inter-probleme',
@@ -10,13 +12,20 @@ import { ZonesValidator } from '../shared/longueur-minimum/longueur-minimum.comp
 export class ProblemeComponent implements OnInit {
 
   problemeForm: FormGroup;
-  constructor(private fb: FormBuilder) {}
+  typesProblemes: ITypeProbleme[];
+  errorMessage: string; 
+  constructor(private fb: FormBuilder, private typesProbleme: TypeProblemeService) {}
 
   ngOnInit() {
     this.problemeForm = this.fb.group({
-      prenomProbleme : ['', [ZonesValidator.plage(3), Validators.maxLength(200), Validators.required]],
-    })
+      prenomProbleme : ['', [ZonesValidator.plageMinimum(3), Validators.required]],
+      nomProbleme : ['', [Validators.maxLength(50), Validators.required]],
+      noTypeProbleme: ['', [, Validators.required]]
+    });
+
+    this.typesProbleme.obtenirTypesProbleme()
+    .subscribe(cat => this.typesProblemes = cat,
+               error => this.errorMessage = <any>error);
   }
 
 }
- 
