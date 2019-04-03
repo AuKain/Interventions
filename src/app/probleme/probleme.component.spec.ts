@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { ProblemeComponent } from './probleme.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TypeProblemeService } from './type-probleme.service';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('ProblemeComponent', () => {
   let component: ProblemeComponent;
@@ -10,8 +11,9 @@ describe('ProblemeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, AngularFontAwesomeModule],
-      declarations: [ ProblemeComponent ]
+      imports: [ReactiveFormsModule, AngularFontAwesomeModule, HttpClientModule],
+      declarations: [ ProblemeComponent ],
+      providers:[ TypeProblemeService ]
     })
     .compileComponents();
   }));
@@ -64,4 +66,6 @@ describe('ProblemeComponent', () => {
     prenomProbleme.setValue('  a');
     expect(errors['nbreCaracteresInsuffisants']).toBe(true);
   })
+
+  
 });
