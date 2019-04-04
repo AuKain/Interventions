@@ -59,7 +59,7 @@ describe('ProblemeComponent', () => {
     expect(errors['nbreCaracteresInsuffisants']).toBe(true);
   });
 
-  it('Champ PRÉNOM invalide avec 2 espaces et 1 caractère ', () => {
+  it('Champ PRÉNOM invalide avec 2 espaces et 1 caractère', () => {
     let errors = {};
     let prenomProbleme = component.problemeForm.controls['prenomProbleme'];
     errors = prenomProbleme.errors || {};
@@ -67,5 +67,33 @@ describe('ProblemeComponent', () => {
     expect(errors['nbreCaracteresInsuffisants']).toBe(true);
   })
 
-  
+  it('Zone TELEPHONE est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification('pasNotifier');
+    let errors = {};
+    let zone = component.problemeForm.controls['telephone'];
+    expect(zone.status).toEqual('DISABLED');
+  });
+
+  it('Zone TELEPHONE est vide quand ne pas me notifier', () => {
+    component.gestionNotification('notifier');
+    let errors = {};
+    let zone = component.problemeForm.controls['telephone'];
+    expect(zone.value).toBeNull();
+  });
+
+  it('Zone ADRESSE COURRIEL est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification('pasNotifier');
+    let errors = {};
+    let zone = component.problemeForm.get('courrielGroup.courriel');
+    expect(zone.status).toEqual('DISABLED');
+  });
+
+  it('Zone CONFIRMER COURRIEL est désactivée quand ne pas me notifier', () => {
+    component.gestionNotification('pasNotifier');
+    let errors = {};
+    let zone = component.problemeForm.get('courrielGroup.courrielConfirmation');
+    expect(zone.status).toEqual('DISABLED');
+  });
+
+
 });

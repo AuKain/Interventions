@@ -33,10 +33,10 @@ export class ProblemeComponent implements OnInit {
               error => this.errorMessage = <any>error);
   }
 
-  gestionDates(typeCueillette: string): void {
-    const courrielControl = this.problemeForm.get('datesGroup.dateCommande');
-    const courrielConfirmationControl = this.problemeForm.get('datesGroup.dateExpedition');   
-    const telephoneControl = this.problemeForm.get('datesGroup');      
+  gestionNotification(typeCueillette: string): void {
+    const courrielControl = this.problemeForm.get('courrielGroup.courriel');
+    const courrielConfirmationControl = this.problemeForm.get('courrielGroup.courrielConfirmation');   
+    const telephoneControl = this.problemeForm.get('telephone');
 
     // Tous remettre à zéro
     courrielControl.clearValidators();
@@ -51,7 +51,7 @@ export class ProblemeComponent implements OnInit {
     telephoneControl.reset();
     telephoneControl.disable();
 
-    if (typeCueillette === 'courriel') {
+    if (typeCueillette === 'notifier') {
       courrielControl.setValidators([Validators.required]);
       courrielControl.enable();  
       courrielConfirmationControl.setValidators([Validators.required]);
