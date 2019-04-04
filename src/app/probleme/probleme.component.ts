@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ZonesValidator } from '../shared/longueur/longueur.component';
 import { TypeProblemeService } from './type-probleme.service';
 import { ITypeProbleme } from './typeProbleme';
+import { emailMatcherValidator } from '../shared/email-matcher/email-matcher.component';
 
 @Component({
   selector: 'Inter-probleme',
@@ -29,11 +30,11 @@ export class ProblemeComponent implements OnInit {
     });
 
     this.typesProbleme.obtenirTypesProbleme()
-    .subscribe(cat => this.typesProblemes = cat,
-              error => this.errorMessage = <any>error);
+    .subscribe(cat => this.typesProblemes = cat, error => this.errorMessage = <any>error);
   }
 
-  gestionNotification(typeCueillette: string): void {
+  gestionNotification(typeNotif: string): void {
+    const courrielGroupeControl = this.problemeForm.get('courrielGroup');
     const courrielControl = this.problemeForm.get('courrielGroup.courriel');
     const courrielConfirmationControl = this.problemeForm.get('courrielGroup.courrielConfirmation');   
     const telephoneControl = this.problemeForm.get('telephone');
@@ -51,14 +52,19 @@ export class ProblemeComponent implements OnInit {
     telephoneControl.reset();
     telephoneControl.disable();
 
-    if (typeCueillette === 'notifier') {
-      courrielControl.setValidators([Validators.required]);
+    if (typeNotif === 'courriel') {
+      courrielControl.setValidators([Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+')]);
       courrielControl.enable();  
+      
       courrielConfirmationControl.setValidators([Validators.required]);
       courrielConfirmationControl.enable();
+
+      courrielGroupeControl.setValidators([Validators.compose([emailMatcherValidator.courrielDifferents()])])
       // Si le validateur est dans un autre fichier l'écire sous la forme suivante : 
       // ...Validators.compose([classeDuValidateur.NomDeLaMethode()])])
+    } else if (typeNotif === 'telephone') {
       telephoneControl.setValidators([Validators.required]);
+      telephoneControl.enable();
     }
     courrielControl.updateValueAndValidity();
     courrielConfirmationControl.updateValueAndValidity();
