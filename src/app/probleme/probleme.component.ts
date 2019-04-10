@@ -63,7 +63,7 @@ export class ProblemeComponent implements OnInit {
       // Si le validateur est dans un autre fichier l'écire sous la forme suivante : 
       // ...Validators.compose([classeDuValidateur.NomDeLaMethode()])])
     } else if (typeNotif === 'telephone') {
-      telephoneControl.setValidators([Validators.required]);
+      telephoneControl.setValidators([Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(10), Validators.maxLength(10)]);
       telephoneControl.enable();
     }
     courrielControl.updateValueAndValidity();
