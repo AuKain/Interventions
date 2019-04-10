@@ -27,10 +27,13 @@ export class ProblemeComponent implements OnInit {
         courrielConfirmation: [{value: '', disabled: true}],
         }),
        telephone: [{value: '', disabled: true}], 
+       radioNotif : ['pasNotifier']
     });
 
     this.typesProbleme.obtenirTypesProbleme()
     .subscribe(cat => this.typesProblemes = cat, error => this.errorMessage = <any>error);
+
+    this.problemeForm.get('radioNotif').valueChanges.subscribe(value => this.gestionNotification(value));
   }
 
   gestionNotification(typeNotif: string): void {
@@ -64,7 +67,7 @@ export class ProblemeComponent implements OnInit {
       telephoneControl.setValidators([Validators.required, Validators.pattern('[0-9]+'), Validators.minLength(10), Validators.maxLength(10)]);
       telephoneControl.enable();
     }
-    
+
     courrielControl.updateValueAndValidity();
     courrielConfirmationControl.updateValueAndValidity();
     telephoneControl.updateValueAndValidity();
