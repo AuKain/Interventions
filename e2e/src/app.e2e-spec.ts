@@ -10,14 +10,31 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Welcome to Interventions!');
+    expect(page.getTitleText()).toEqual('Déclarer un problème');
   });
 
-  afterEach(async () => {
-    // Assert that there are no errors emitted from the browser
-    const logs = await browser.manage().logs().get(logging.Type.BROWSER);
-    expect(logs).not.toContain(jasmine.objectContaining({
-      level: logging.Level.SEVERE,
-    } as logging.Entry));
+  it('doit activer le bouton Sauvegarder avec champs valides scénario nominal', () => {
+    page.setChampsValidesScenarioNominal();                    
+    expect(page.boutonSubmit().isEnabled()).toBe(true);
+  });
+
+  it('Doit activer le bouton Sauvegarder avec champs valides scénario alternatif Par message TEXTE', () => {
+    page.setChampsValidesScenarioAlternatifParMessageTexte();                    
+    expect(page.boutonSubmit().isEnabled()).toBe(true);
+  });
+
+  it('Doit activer le bouton Sauvegarder avec champs valides scénario alternatif Par courriel', () => {
+    page.setChampsValidesScenarioAlternatifParCourriel();                    
+    expect(page.boutonSubmit().isEnabled()).toBe(true);
+  });
+
+  it('Zone DESCRIPTION DU PROBLÈME a une bordure VERTE si nombre de caractères suffisant', () => {
+    page.setZoneDescriptionProblemeCaracteresSuffisant();
+    expect(page.obtenirClasseZoneDescriptionProbleme()).toContain('is-valid');
+  });
+
+  it('Zone DESCRIPTION DU PROBLÈME a une bordure ROUGE si nombre de caractères insuffisant', () => {
+    page.setZoneDescriptionProblemeCaracteresInsuffisant();
+    expect(page.obtenirClasseZoneDescriptionProbleme()).toContain('is-invalid');
   });
 });
